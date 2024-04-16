@@ -1,0 +1,117 @@
+<div class="row">
+    <div [className]="isSidePanelVisible ? 'col-8':'col-12'" >
+        <div class="card">
+            <div class="card-header bg-success">
+                <div class="row">
+                    <div class="col-6">
+                        Car List
+                    </div>
+                    <div class="col-6 text-end">
+                        <button class="btn btn-primary" (click)="isSidePanelVisible = true">Add new</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Sr No</th>
+                            <th>Customer</th> 
+                            <th>Car</th>
+                            <th>Rent Type</th>
+                            <th>Duration</th>
+                            <th>No Of Cars</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (item of bookingList; track item.bookingId;let sr = $index) {
+                            <tr>
+                                <td>{{sr+1}}</td>
+                                <td> {{item.customerName}}
+                                 <br>
+                                 <small>{{item.mobileNo}}</small>
+                                </td> 
+                                <td> {{item.carName}}</td>
+                                <td> {{item.rentType}}</td>
+                                <td> {{item.rentDuration}}</td>
+                                <td> {{item.noOfCars}}</td>
+                                
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    @if (isSidePanelVisible) {
+        <div class="col-4">
+            <div class="card">
+                <div class="card-header bg-success">
+                    <div class="row">
+                        <div class="col-6">
+                            New Car
+                        </div>
+                        <div class="col-6 text-end">
+                            <button class="btn btn-primary" (click)="isSidePanelVisible = false">Close</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="">Customer Name</label>
+                            <input type="text" [(ngModel)]="bookingObj.customerName" class="form-control" >
+                        </div>
+                        <div class="col-6">
+                            <label for="">Mobile No</label>
+                            <input type="number" maxlength="10" [(ngModel)]="bookingObj.mobileNo" class="form-control" >
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="">Select Car</label>
+                            <select  class="form-select" [(ngModel)]="bookingObj.carId">
+                                @for (item of carList; track $index) {
+                                    <option [value]="item.carId"> {{item.carName}}</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label for="">Booking Date</label>
+                            <input type="date" [(ngModel)]="bookingObj.bookingDate" class="form-control" >
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="">Rent Type</label>
+                            <select  class="form-select" [(ngModel)]="bookingObj.rentType">
+                                <option value="">Select</option>
+                                <option value="Per Day">Per Day</option>
+                                <option value="Per Hr">Per Hr</option>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label for="">Rent Duration</label>
+                            <input type="number"  [(ngModel)]="bookingObj.rentDuration" class="form-control" >
+                        </div>
+                    </div>
+                    <div class="row"> 
+                        <div class="col-6">
+                            <label for="">No Of Cars</label>
+                            <input type="number" [(ngModel)]="bookingObj.noOfCars" class="form-control" >
+                        </div>
+                    </div>
+                  
+                    <div class="row pt-3">
+                        <div class="col-6  text-center">
+                            <button class="btn btn-secondary" (click)="onReset()">Reset</button>
+                        </div>
+                        <div class="col-6 text-center">
+                            <button class="btn btn-success" (click)="onBookingSave()">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
